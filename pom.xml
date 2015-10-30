@@ -15,14 +15,19 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<scm>
-		<url>https://github.com/spring-cloud/spring-cloud-config</url>
-		<connection>scm:git:git://github.com/spring-cloud/spring-cloud-config.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/spring-cloud/spring-cloud-config.git</developerConnection>
+		<url>https://github.com/GenslerAppsPod/spring-cloud-config</url>
+		<connection>scm:git:git://github.com/GenslerAppsPod/spring-cloud-config.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/GenslerAppsPod/spring-cloud-config.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
     <properties>
         <bintray.package>config</bintray.package>
         <spring-cloud-commons.version>1.0.2.RELEASE</spring-cloud-commons.version>
+
+        <version.wagon-webdav-jackrabbit>2.2</version.wagon-webdav-jackrabbit>
+        <nexus.public>http://fw-dev-maven:8080/nexus/content/groups/public/</nexus.public>
+        <nexus.releases>dav:http://fw-dev-maven:8080/nexus/content/repositories/releases/</nexus.releases>
+        <nexus.snapshots>dav:http://fw-dev-maven:8080/nexus/content/repositories/snapshots/</nexus.snapshots>
     </properties>
 	<modules>
 	  <module>spring-cloud-config-client</module>
@@ -71,4 +76,38 @@
         </dependency>
      </dependencies>
     </dependencyManagement>
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>${nexus.public}</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+    </repositories>
+  
+    <distributionManagement>
+        <!-- Publish the versioned releases here -->
+        <repository>
+            <id>releases</id>
+            <name>Gensler Releases</name>
+            <url>${nexus.releases}</url>
+        </repository>
+        <!-- Publish the versioned snapshots here -->
+        <snapshotRepository>
+            <id>snapshots</id>
+            <uniqueVersion>false</uniqueVersion>
+            <name>Gensler Snapshots</name>
+            <url>${nexus.snapshots}</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav-jackrabbit</artifactId>
+                <version>${version.wagon-webdav-jackrabbit}</version>
+            </extension>
+        </extensions>
+    </build>
 </project>
