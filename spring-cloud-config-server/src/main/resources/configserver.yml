@@ -4,15 +4,21 @@ spring:
   application:
     name: configserver
   jmx:
-    default_domain: cloud.config.server
+    default_domain: gensler.config.server
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/spring-cloud-samples/config-repo
+          uri: https://github.com/GenslerAppsPod/soa-Configurations.git
+          username: ${sources.github.username:}
+          password: ${sources.github.password:}
           repos:
-            - patterns: multi-repo-demo-*
-              uri: https://github.com/spring-cloud-samples/config-repo
+            vision-services:
+              uri: https://github.com/GenslerAppsPod/soa-Configurations.git
+              username: ${sources.github.username:}
+              password: ${sources.github.password:}
+              cloneOnStart: true
+              searchPaths: vi-configs
 
 server:
   port: 8888
